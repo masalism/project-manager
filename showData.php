@@ -2,6 +2,8 @@
 
 include './connection.php';
 
+
+// Show workers table
 function showAllWorkers($conn)
 {
     $sql = "SELECT w.worker_id, w.worker_name, p.project_name 
@@ -32,6 +34,7 @@ function showAllWorkers($conn)
     echo "</tbody></table>";
 }
 
+// Show dropdown
 function showAllSelectOptions($conn)
 {
     $sql = ("SELECT * FROM projects;") or die("Connection failed: " . mysqli_connect_error());
@@ -52,6 +55,8 @@ function showAllSelectOptions($conn)
     mysqli_close($conn);
 }
 
+
+// Show projects
 function showAllProjects($conn) {
     $sql = "SELECT p.project_id, p.project_name, group_concat(w.worker_name SEPARATOR ', ') as worker_name
     from projects p
