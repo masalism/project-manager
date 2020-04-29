@@ -1,4 +1,5 @@
 <?php include './connection.php' ?>
+<?php include './functions.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,46 +17,23 @@
         <a class="m-3 btn btn-secondary d-inline-block" href="projects.php">Projektai</a>
 
         <?php
-
-        $sql = "SELECT w.worker_id, w.worker_name, p.project_name 
-                from workers w
-                left outer join projects p
-                on w.project_id = p.project_id
-                order by w.worker_id;";
-
-        $result = mysqli_query($conn, $sql);
-
-        echo "<table class=\"table\"><thead><tr><th>ID</th><th>Vardas</th><th>Projektas</th><th>Veiksmai</th></tr></thead><tbody>";
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>" . $row['worker_id'] . "</td>";
-                echo "<td>" . $row['worker_name'] . "</td>";
-                echo "<td>" . $row['project_name'] . "</td>";
-                echo "<td>
-            <a href=\"connection.php?delete=" . $row['worker_id'] . "\"  class=\"btn btn-sm btn-danger mr-2\" >Delete </a><a href=\"index.php?edit=" . $row['worker_id'] . "\" class=\"btn btn-sm btn-success mr-2\"> Update</a>
-        </td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "0 results";
-        }
-
-        mysqli_close($conn);
-
-        echo "</tbody></table>";
+        showAllWorkers($conn);
         ?>
 
-        <form action="connection.php" method="POST">
+        <form class="col-md-6" action="connection.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Enter employee name" value="<?php echo $name ?>">
             </div>
             <div class="form-group">
-                <label for="project_id">Project ID</label>
-                <input type="number" name="project_id" value="<?php echo $project_id ?>" class="form-control" placeholder="Enter project ID">
+                <label for="project_id">Project</label>
+                <select name="project_id" id="" class="form-control">
+                    <?php
+                    showAllSelectOptions($conn);
+                    ?>
+                </select>
+
             </div>
             <div class="form-group">
                 <?php
@@ -68,13 +46,7 @@
             </div>
 
         </form>
-
-
-
-
     </div>
-
-
 
 </body>
 

@@ -16,7 +16,6 @@ $id = 0;
 $name = '';
 $project_id = '';
 $update = false;
-$project_edit = 0;
 
 // Delete worker
 if (isset($_GET['delete'])) {
@@ -61,7 +60,7 @@ if (isset($_POST['update_worker'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $project_id = $_POST['project_id'];
-   
+
     if ($project_id == '') {
         $sql = ("UPDATE workers SET worker_name='$name', project_id=null WHERE worker_id=$id;") or die("Connection failed: " . mysqli_connect_error());
     } else {
@@ -103,10 +102,10 @@ if (isset($_GET['editproject'])) {
     }
 }
 
+
 // Update project
 if (isset($_POST['update_project'])) {
     $id = $_POST['id'];
-
     $name = $_POST['project_name'];
     $sql = ("UPDATE projects SET project_name='$name' WHERE project_id=$id;") or die("Connection failed: " . mysqli_connect_error());
 
